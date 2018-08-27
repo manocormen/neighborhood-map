@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class CityMap extends Component {
   render() {
@@ -6,8 +6,8 @@ class CityMap extends Component {
       <div className='CityMap'>
         This is the CityMap component.
       </div>
-    );
+    )
   }
 }
 
-export default CityMap;
+export default CityMap

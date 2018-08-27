@@ -3,11 +3,15 @@
   height: 100vh;
   display: grid;
   /* Fit 1st col and row to content. Fill remaining space with 2nd col and row. */
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 200px 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas:
   "filter map"
   "list map";
+}
+
+.sidebar-heading {
+  font-size: 16px;
 }
 
 .LocationsFilter {
@@ -20,7 +24,7 @@
   grid-area: list;
 }
 
-.LocationList-item {
+.LocationsList-item {
   background-color: green;
 }
 
