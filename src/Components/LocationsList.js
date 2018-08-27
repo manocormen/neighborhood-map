@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import LocationItem from './LocationItem'
 
 class LocationsList extends Component {
   render() {
     return (
       <div className='LocationsList'>
-        <LocationItem/>
-        <LocationItem/>
-        <LocationItem/>
+
+        {this.props.locations.map(location => (
+          <div className='LocationList-item'>
+            {location.name}
+          </div>
+        ))}
+        
       </div>
     );
   }

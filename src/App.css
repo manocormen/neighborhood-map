@@ -20,7 +20,7 @@
   grid-area: list;
 }
 
-.LocationItem {
+.LocationList-item {
   background-color: green;
 }
 

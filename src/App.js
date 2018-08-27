@@ -40,7 +40,7 @@ class App extends Component {
     return (
       <div className='App'>
         <LocationsFilter/>
-        <LocationsList/>
+        <LocationsList locations={this.state.locations}/>
         <CityMap/>
       </div>
     );
