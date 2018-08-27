@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import LocationItem from './LocationItem'
 
 class LocationsList extends Component {
   render() {
     return (
       <div className='LocationsList'>
-        This is the LocationsList component.
+        <LocationItem/>
+        <LocationItem/>
+        <LocationItem/>
       </div>
     );
   }
