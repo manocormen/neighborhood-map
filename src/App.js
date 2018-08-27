@@ -54,17 +54,15 @@ class App extends Component {
     })
   }
 
-  render() {
-    return (
-      <div className='App'>
-        <LocationsFilter
-          filter={this.state.filter}
-          onFilterChange={this.changeFilter}/>
-        <LocationsList locations={this.state.locations}/>
-        <CityMap/>
-      </div>
-    )
-  }
+  render = () => (
+    <div className='App'>
+      <LocationsFilter
+        filter={this.state.filter}
+        onFilterChange={this.changeFilter}/>
+      <LocationsList locations={this.state.locations}/>
+      <CityMap/>
+    </div>
+  )
 }
 
 export default App
