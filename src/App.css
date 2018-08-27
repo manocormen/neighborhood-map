@@ -1,0 +1,26 @@
+.App {
+  background-color: black;
+  height: 100vh;
+  display: grid;
+  /* Fit 1st col and row to content. Fill remaining space with 2nd col and row. */
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+  "filter map"
+  "list map";
+}
+
+.LocationsFilter {
+  background-color: blue;
+  grid-area: filter;
+}
+
+.LocationsList {
+  background-color: yellow;
+  grid-area: list;
+}
+
+.CityMap {
+  background-color: red;
+  grid-area: map;
+}
