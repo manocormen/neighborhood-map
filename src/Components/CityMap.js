@@ -34,9 +34,19 @@ class CityMap extends Component {
     this.props.onMarkerSet(newMarker, locationIndex)
   }
 
+  createInfoWindow = locationIndex => {
+    const newInfoWindow = new window.google.maps.InfoWindow({
+      content: this.props.locations[locationIndex].name
+    })
+
+    this.props.onInfoWindowSet(newInfoWindow, locationIndex)
+  }
+
   initMap = () => {
     this.createMap()
     this.createMarker(4)
+    this.createInfoWindow(4)
+    this.props.onInfoWindowToMarkerBind(4)
   }
 
   render = () => (
