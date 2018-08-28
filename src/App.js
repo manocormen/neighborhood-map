@@ -9,6 +9,10 @@ class App extends Component {
   state = {
     map: null,
     filter: 'showAll',
+    unsplash: {
+      endPoint: 'https://api.unsplash.com/photos/',
+      client_id: 'f3b28d2ee911b925bfb83f45e94e9426a1efa5613cde8cb531d2b7168feede7c'
+    },
     locations: [
       {
         name: 'National Gallery',
@@ -17,7 +21,9 @@ class App extends Component {
         display: true,
         highlight: false,
         marker: null,
-        infoWindow: null
+        infoWindow: null,
+        photoId: 'SKEXXjiNYIU',
+        photoData: null
       },
       {
         name: 'St James\'s Park',
@@ -26,7 +32,9 @@ class App extends Component {
         display: true,
         highlight: false,
         marker: null,
-        infoWindow: null
+        infoWindow: null,
+        photoId: 'gmrXvrxK89E',
+        photoData: null
       },
       {
         name: 'Palace of Westminster',
@@ -35,7 +43,9 @@ class App extends Component {
         display: true,
         highlight: false,
         marker: null,
-        infoWindow: null
+        infoWindow: null,
+        photoId: 'msaWUSxVstU',
+        photoData: null
       },
       {
         name: 'Borough Market',
@@ -44,7 +54,9 @@ class App extends Component {
         display: true,
         highlight: false,
         marker: null,
-        infoWindow: null
+        infoWindow: null,
+        photoId: 'QUQ53Qkmul0',
+        photoData: null
       },
       {
         name: 'Tower Bridge',
@@ -53,30 +65,27 @@ class App extends Component {
         display: true,
         highlight: false,
         marker: null,
-        infoWindow: null
+        infoWindow: null,
+        photoId: 'ImoVrhUBeFs',
+        photoData: null
       }
     ]
   }
 
   setMap = newMap => this.setState({ map: newMap })
 
-  changeFilter = newFilter => {
-    const newLocations = this.state.locations.map((location, locationIndex) => {
-      location.display = (newFilter === 'showAll' || location.type === newFilter) ? true : false
-      this.toggleMarker(locationIndex)
-      this.closeFilteredInfoWindows(locationIndex)
-      return location
-    })
-
-    this.setState({
-      filter: newFilter,
-      locations: newLocations
-    })
-  }
-
   setMarker = (newMarker, locationIndex) => {
     const newLocations = this.state.locations.map((location, index) => {
       if (locationIndex === index) { location.marker = newMarker }
+      return location
+    })
+
+    this.setState({ locations: newLocations })
+  }
+
+  setPhotoData = (newPhotoData, locationIndex) => {
+    const newLocations = this.state.locations.map((location, index) => {
+      if (locationIndex === index) { location.photoData = newPhotoData }
       return location
     })
 
@@ -90,6 +99,20 @@ class App extends Component {
     })
 
     this.setState({ locations: newLocations })
+  }
+
+  changeFilter = newFilter => {
+    const newLocations = this.state.locations.map((location, locationIndex) => {
+      location.display = (newFilter === 'showAll' || location.type === newFilter) ? true : false
+      this.toggleMarker(locationIndex)
+      this.closeFilteredInfoWindows(locationIndex)
+      return location
+    })
+
+    this.setState({
+      filter: newFilter,
+      locations: newLocations
+    })
   }
 
   toggleMarker = locationIndex => {
@@ -175,7 +198,9 @@ class App extends Component {
         onMarkerSet={this.setMarker}
         onInfoWindowSet={this.setInfoWindow}
         handleHover={this.toggleHighlight}
-        handleClick={this.toggleInfoWindow}/>
+        handleClick={this.toggleInfoWindow}
+        unsplash={this.state.unsplash}
+        onPhotoDataSet={this.setPhotoData}/>
     </div>
   )
 }

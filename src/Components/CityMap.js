@@ -20,7 +20,6 @@ class CityMap extends Component {
       center: {lat: 51.502491, lng: -0.10031},
       zoom: 13,
       mapTypeControl: false
-      // TODO: should I remove ability to zoom?
     })
 
     this.props.onMapSet(newMap)
@@ -41,17 +40,34 @@ class CityMap extends Component {
   }
 
   createInfoWindow = locationIndex => {
-    const newInfoWindow = new window.google.maps.InfoWindow({
-      content: this.props.locations[locationIndex].name,
-      visible: false
+
+    let query = this.props.unsplash.endPoint
+    query += this.props.locations[locationIndex].photoId
+    query += `?client_id=${this.props.unsplash.client_id}`
+
+    fetch(query)
+    .then(response => response.json())
+    .then(newPhotoData => {
+      this.props.onPhotoDataSet(newPhotoData, locationIndex)
+      return newPhotoData.urls.thumb
     })
+    .then(thumbnail => {
+      const newInfoWindow = new window.google.maps.InfoWindow({
+        content:
+          `<div>${this.props.locations[locationIndex].name}</div>
+           <img src=${thumbnail}/>`,
+        visible: false
+      })
+      return newInfoWindow
+    })
+    .then(newInfoWindow => {
+      const marker = this.props.locations[locationIndex].marker
 
-    const marker = this.props.locations[locationIndex].marker
+      marker.addListener('click', () => this.props.handleClick(locationIndex))
+      newInfoWindow.addListener('closeclick', () => this.props.handleClick(locationIndex))
 
-    marker.addListener('click', () => this.props.handleClick(locationIndex))
-    newInfoWindow.addListener('closeclick', () => this.props.handleClick(locationIndex))
-
-    this.props.onInfoWindowSet(newInfoWindow, locationIndex)
+      this.props.onInfoWindowSet(newInfoWindow, locationIndex)
+    })
   }
 
   initMap = () => {
