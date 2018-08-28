@@ -64,6 +64,7 @@ class App extends Component {
     const newLocations = this.state.locations.map((location, locationIndex) => {
       location.display = (newFilter === 'showAll' || location.type === newFilter) ? true : false
       this.toggleMarker(locationIndex)
+      this.closeFilteredInfoWindows(locationIndex)
       return location
     })
 
@@ -137,6 +138,18 @@ class App extends Component {
   closeAllInfoWindows = () => {
     const newLocations = this.state.locations.map(location => {
       if (location.infoWindow.visible) {
+        location.infoWindow.close()
+        location.infoWindow.visible = false
+      }
+      return location
+    })
+
+    this.setState({ locations: newLocations })
+  }
+
+  closeFilteredInfoWindows = locationIndex => {
+    const newLocations = this.state.locations.map(location => {
+      if (!location.marker.visible) {
         location.infoWindow.close()
         location.infoWindow.visible = false
       }
