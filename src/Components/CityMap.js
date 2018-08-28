@@ -28,7 +28,8 @@ class CityMap extends Component {
     const newMarker = new window.google.maps.Marker({
       map: this.props.map,
       position: this.props.locations[locationIndex].latlng,
-      title: this.props.locations[locationIndex].name
+      title: this.props.locations[locationIndex].name,
+      visible: false
     })
 
     this.props.onMarkerSet(newMarker, locationIndex)
@@ -50,8 +51,8 @@ class CityMap extends Component {
       this.createMarker(locationIndex)
       this.createInfoWindow(locationIndex)
       this.props.onInfoWindowToMarkerBind(locationIndex)
+      this.props.onMarkerToggle(locationIndex, this.props.locations[locationIndex].display)
     })
-
   }
 
   render = () => (
