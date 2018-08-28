@@ -7,37 +7,43 @@ import './App.css';
 class App extends Component {
 
   state = {
+    map: null,
     filter: 'showAll',
     locations: [
       {
         name: 'National Gallery',
         type: 'museum',
-        latlng: (51.508929,-0.128299),
-        display: true
+        latlng: {lat: 51.508929, lng: -0.128299},
+        display: true,
+        marker: null
       },
       {
         name: 'St James\'s Park',
         type: 'park',
-        latlng: (51.50246,-0.134811),
-        display: true
+        latlng: {lat: 51.50246, lng: -0.134811},
+        display: true,
+        marker: null
       },
       {
         name: 'Palace of Westminster',
         type: 'building',
-        latlng: (51.499479,-0.124809),
-        display: true
+        latlng: {lat: 51.499479, lng: -0.124809},
+        display: true,
+        marker: null
       },
       {
         name: 'Borough Market',
         type: 'market',
-        latlng: (51.50544,-0.091061),
-        display: true
+        latlng: {lat: 51.50544, lng: -0.091061},
+        display: true,
+        marker: null
       },
       {
         name: 'Tower Bridge',
         type: 'bridge',
-        latlng: (51.505417,-0.07539),
-        display: true
+        latlng: {lat: 51.505456, lng: -0.075356},
+        display: true,
+        marker: null
       }
     ]
   }
@@ -54,13 +60,28 @@ class App extends Component {
     })
   }
 
+  setMap = newMap => this.setState({ map: newMap })
+
+  setMarker = (newMarker, locationIndex) => {
+    const newLocations = this.state.locations.map((location, index) => {
+      if (locationIndex === index) {location.marker = newMarker}
+      return location
+    })
+
+    this.setState({ locations: newLocations })
+  }
+
   render = () => (
     <div className='App'>
       <LocationsFilter
         filter={this.state.filter}
         onFilterChange={this.changeFilter}/>
       <LocationsList locations={this.state.locations}/>
-      <CityMap/>
+      <CityMap
+        map={this.state.map}
+        locations={this.state.locations}
+        onMapSet={this.setMap}
+        onMarkerSet={this.setMarker}/>
     </div>
   )
 }

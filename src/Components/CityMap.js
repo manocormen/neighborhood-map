@@ -15,10 +15,29 @@ class CityMap extends Component {
     document.body.appendChild(loadMapsAPIScript)
   }
 
-  initMap = () => new window.google.maps.Map(this.refs.map, {
-    center: {lat: 51.502491, lng: -0.10031},
-    zoom: 13
-  })
+  createMap = () => {
+    const newMap = new window.google.maps.Map(this.refs.map, {
+      center: {lat: 51.502491, lng: -0.10031},
+      zoom: 13
+    })
+
+    this.props.onMapSet(newMap)
+  }
+
+  createMarker = locationIndex => {
+    const newMarker = new window.google.maps.Marker({
+      map: this.props.map,
+      position: this.props.locations[locationIndex].latlng,
+      title: this.props.locations[locationIndex].name
+    })
+
+    this.props.onMarkerSet(newMarker, locationIndex)
+  }
+
+  initMap = () => {
+    this.createMap()
+    this.createMarker(4)
+  }
 
   render = () => (
     <div className='CityMap'>
