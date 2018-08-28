@@ -44,9 +44,14 @@ class CityMap extends Component {
 
   initMap = () => {
     this.createMap()
-    this.createMarker(4)
-    this.createInfoWindow(4)
-    this.props.onInfoWindowToMarkerBind(4)
+
+    // I only needed the locationIndex, but for...in didn't work here
+    this.props.locations.forEach((_location, locationIndex) => {
+      this.createMarker(locationIndex)
+      this.createInfoWindow(locationIndex)
+      this.props.onInfoWindowToMarkerBind(locationIndex)
+    })
+
   }
 
   render = () => (
