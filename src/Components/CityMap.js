@@ -18,7 +18,9 @@ class CityMap extends Component {
   createMap = () => {
     const newMap = new window.google.maps.Map(this.refs.map, {
       center: {lat: 51.502491, lng: -0.10031},
-      zoom: 13
+      zoom: 13,
+      mapTypeControl: false
+      // TODO: should I remove ability to zoom?
     })
 
     this.props.onMapSet(newMap)
@@ -28,8 +30,12 @@ class CityMap extends Component {
     const newMarker = new window.google.maps.Marker({
       map: this.props.map,
       position: this.props.locations[locationIndex].latlng,
-      title: this.props.locations[locationIndex].name
+      title: this.props.locations[locationIndex].name,
+      icon: 'http://maps.google.com/mapfiles/ms/icons/red.png'
     })
+
+    newMarker.addListener('mouseover', () => this.props.handleHover(locationIndex))
+    newMarker.addListener('mouseout', () => this.props.handleHover(locationIndex))
 
     this.props.onMarkerSet(newMarker, locationIndex)
   }
@@ -54,7 +60,6 @@ class CityMap extends Component {
     this.props.locations.forEach((_location, locationIndex) => {
       this.createMarker(locationIndex)
       this.createInfoWindow(locationIndex)
-      // this.bindInfoWindowToMarker(locationIndex)
     })
   }
 

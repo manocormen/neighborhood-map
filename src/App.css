@@ -27,6 +27,10 @@
   background-color: green;
 }
 
+.LocationsList-item-highlight {
+  background-color: grey;
+}
+
 .CityMap {
   grid-area: map;
 }

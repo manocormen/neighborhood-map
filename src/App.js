@@ -15,6 +15,7 @@ class App extends Component {
         type: 'museum',
         latlng: {lat: 51.508929, lng: -0.128299},
         display: true,
+        highlight: false,
         marker: null,
         infoWindow: null
       },
@@ -23,6 +24,7 @@ class App extends Component {
         type: 'park',
         latlng: {lat: 51.50246, lng: -0.134811},
         display: true,
+        highlight: false,
         marker: null,
         infoWindow: null
       },
@@ -31,6 +33,7 @@ class App extends Component {
         type: 'building',
         latlng: {lat: 51.499479, lng: -0.124809},
         display: true,
+        highlight: false,
         marker: null,
         infoWindow: null
       },
@@ -39,6 +42,7 @@ class App extends Component {
         type: 'market',
         latlng: {lat: 51.50544, lng: -0.091061},
         display: true,
+        highlight: false,
         marker: null,
         infoWindow: null
       },
@@ -47,6 +51,7 @@ class App extends Component {
         type: 'bridge',
         latlng: {lat: 51.505456, lng: -0.075356},
         display: true,
+        highlight: false,
         marker: null,
         infoWindow: null
       }
@@ -95,18 +100,37 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  toggleHighlight = locationIndex => {
+    const newLocations = this.state.locations.map((location, index) => {
+      if (index === locationIndex) {
+        location.highlight = (location.highlight) ? false : true
+        location.marker.setIcon(
+          (location.marker.icon === 'http://maps.google.com/mapfiles/ms/icons/red.png') ?
+          'http://maps.google.com/mapfiles/ms/icons/blue.png' :
+          'http://maps.google.com/mapfiles/ms/icons/red.png'
+        )
+      }
+      return location
+    })
+
+    this.setState({ locations: newLocations })
+  }
+
   render = () => (
     <div className='App'>
       <LocationsFilter
         filter={this.state.filter}
         onFilterChange={this.changeFilter}/>
-      <LocationsList locations={this.state.locations}/>
+      <LocationsList
+        locations={this.state.locations}
+        handleHover={this.toggleHighlight}/>
       <CityMap
         map={this.state.map}
         locations={this.state.locations}
         onMapSet={this.setMap}
         onMarkerSet={this.setMarker}
-        onInfoWindowSet={this.setInfoWindow}/>
+        onInfoWindowSet={this.setInfoWindow}
+        handleHover={this.toggleHighlight}/>
     </div>
   )
 }
