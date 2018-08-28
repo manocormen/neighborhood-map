@@ -116,6 +116,36 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  toggleInfoWindow = locationIndex => {
+    const newLocations = this.state.locations.map((location, index) => {
+      if (index === locationIndex) {
+        if (!location.infoWindow.visible) {
+          this.closeAllInfoWindows()
+          location.infoWindow.open(this.state.map, location.marker)
+          location.infoWindow.visible = true
+        } else {
+          location.infoWindow.close()
+          location.infoWindow.visible = false
+        }
+      }
+      return location
+    })
+
+    this.setState({ locations: newLocations })
+  }
+
+  closeAllInfoWindows = () => {
+    const newLocations = this.state.locations.map(location => {
+      if (location.infoWindow.visible) {
+        location.infoWindow.close()
+        location.infoWindow.visible = false
+      }
+      return location
+    })
+
+    this.setState({ locations: newLocations })
+  }
+
   render = () => (
     <div className='App'>
       <LocationsFilter
@@ -123,14 +153,16 @@ class App extends Component {
         onFilterChange={this.changeFilter}/>
       <LocationsList
         locations={this.state.locations}
-        handleHover={this.toggleHighlight}/>
+        handleHover={this.toggleHighlight}
+        handleClick={this.toggleInfoWindow}/>
       <CityMap
         map={this.state.map}
         locations={this.state.locations}
         onMapSet={this.setMap}
         onMarkerSet={this.setMarker}
         onInfoWindowSet={this.setInfoWindow}
-        handleHover={this.toggleHighlight}/>
+        handleHover={this.toggleHighlight}
+        handleClick={this.toggleInfoWindow}/>
     </div>
   )
 }

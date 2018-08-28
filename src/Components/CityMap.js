@@ -42,13 +42,14 @@ class CityMap extends Component {
 
   createInfoWindow = locationIndex => {
     const newInfoWindow = new window.google.maps.InfoWindow({
-      content: this.props.locations[locationIndex].name
+      content: this.props.locations[locationIndex].name,
+      visible: false
     })
 
-    const map = this.props.map
     const marker = this.props.locations[locationIndex].marker
 
-    marker.addListener('click', () => newInfoWindow.open(map, marker))
+    marker.addListener('click', () => this.props.handleClick(locationIndex))
+    newInfoWindow.addListener('closeclick', () => this.props.handleClick(locationIndex))
 
     this.props.onInfoWindowSet(newInfoWindow, locationIndex)
   }

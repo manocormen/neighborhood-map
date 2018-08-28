@@ -12,7 +12,8 @@ class LocationsList extends Component {
             key={locationIndex}
             className={ (location.highlight) ? 'LocationsList-item-highlight' : 'LocationsList-item'}
             onMouseEnter={() => this.props.handleHover(locationIndex)}
-            onMouseLeave={() => this.props.handleHover(locationIndex)}>
+            onMouseLeave={() => this.props.handleHover(locationIndex)}
+            onClick={() => this.props.handleClick(locationIndex)}>
             {location.name}
           </div>
         ) : null
