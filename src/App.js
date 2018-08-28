@@ -53,9 +53,12 @@ class App extends Component {
     ]
   }
 
+  setMap = newMap => this.setState({ map: newMap })
+
   changeFilter = newFilter => {
-    const newLocations = this.state.locations.map(location => {
+    const newLocations = this.state.locations.map((location, locationIndex) => {
       location.display = (newFilter === 'showAll' || location.type === newFilter) ? true : false
+      this.toggleMarker(locationIndex)
       return location
     })
 
@@ -64,8 +67,6 @@ class App extends Component {
       locations: newLocations
     })
   }
-
-  setMap = newMap => this.setState({ map: newMap })
 
   setMarker = (newMarker, locationIndex) => {
     const newLocations = this.state.locations.map((location, index) => {
@@ -85,17 +86,9 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
-  bindInfoWindowToMarker = locationIndex => {
-    const map = this.state.map
-    const marker = this.state.locations[locationIndex].marker
-    const infoWindow = this.state.locations[locationIndex].infoWindow
-
-    marker.addListener('click', () => infoWindow.open(map, marker))
-  }
-
-  toggleMarker = (locationIndex, makeVisible) => {
+  toggleMarker = locationIndex => {
     const newLocations = this.state.locations.map((location, index) => {
-      if (index === locationIndex) { location.marker.setVisible(makeVisible) }
+      if (index === locationIndex) { location.marker.setVisible(location.display) }
       return location
     })
 
@@ -113,9 +106,7 @@ class App extends Component {
         locations={this.state.locations}
         onMapSet={this.setMap}
         onMarkerSet={this.setMarker}
-        onInfoWindowSet={this.setInfoWindow}
-        onInfoWindowToMarkerBind={this.bindInfoWindowToMarker}
-        onMarkerToggle={this.toggleMarker}/>
+        onInfoWindowSet={this.setInfoWindow}/>
     </div>
   )
 }

@@ -28,8 +28,7 @@ class CityMap extends Component {
     const newMarker = new window.google.maps.Marker({
       map: this.props.map,
       position: this.props.locations[locationIndex].latlng,
-      title: this.props.locations[locationIndex].name,
-      visible: false
+      title: this.props.locations[locationIndex].name
     })
 
     this.props.onMarkerSet(newMarker, locationIndex)
@@ -39,6 +38,11 @@ class CityMap extends Component {
     const newInfoWindow = new window.google.maps.InfoWindow({
       content: this.props.locations[locationIndex].name
     })
+
+    const map = this.props.map
+    const marker = this.props.locations[locationIndex].marker
+
+    marker.addListener('click', () => newInfoWindow.open(map, marker))
 
     this.props.onInfoWindowSet(newInfoWindow, locationIndex)
   }
@@ -50,8 +54,7 @@ class CityMap extends Component {
     this.props.locations.forEach((_location, locationIndex) => {
       this.createMarker(locationIndex)
       this.createInfoWindow(locationIndex)
-      this.props.onInfoWindowToMarkerBind(locationIndex)
-      this.props.onMarkerToggle(locationIndex, this.props.locations[locationIndex].display)
+      // this.bindInfoWindowToMarker(locationIndex)
     })
   }
 
