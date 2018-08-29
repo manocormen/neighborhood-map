@@ -23,12 +23,18 @@
   grid-area: list;
 }
 
+.LocationsList-list {
+  padding: 0;
+}
+
 .LocationsList-item {
   background-color: green;
+  list-style: none;
 }
 
 .LocationsList-item-highlight {
   background-color: grey;
+  list-style: none;
 }
 
 .CityMap {
