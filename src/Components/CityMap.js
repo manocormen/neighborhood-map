@@ -36,7 +36,7 @@ class CityMap extends Component {
       map: this.props.map,
       position: this.props.locations[locationIndex].latlng,
       title: this.props.locations[locationIndex].name,
-      icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png'
+      icon: 'img/blue.png'
     })
 
     newMarker.addListener('mouseover', () => this.props.handleHover(locationIndex))
