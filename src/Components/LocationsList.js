@@ -3,9 +3,10 @@ import React, { Component } from 'react'
 class LocationsList extends Component {
 
   render = () => (
-    <div className='LocationsList'>
+    <aside className='LocationsList'>
       <h1 className='sidebar-heading'>Locations</h1>
-        <ul className='LocationsList-list'>
+        <ul aria-label='List of locations in London' className='LocationsList-list'>
+
           {this.props.locations.map((location, locationIndex) =>
             (location.display) ? (
               <li
@@ -17,11 +18,12 @@ class LocationsList extends Component {
                 onFocus={() => this.props.handleClick(locationIndex)}
                 onBlur={() => this.props.handleClick(locationIndex)}>
                 {location.name}
-              </li  >
+              </li>
             ) : null
           )}
+          
         </ul>
-    </div>
+    </aside>
   )
 }
 

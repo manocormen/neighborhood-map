@@ -81,9 +81,9 @@ class CityMap extends Component {
   }
 
   render = () => (
-    <div className='CityMap'>
-      <div ref='map' className='CityMap-map'></div>
-    </div>
+    <section className='CityMap'>
+      <div role='application' aria-label='Map of London' ref='map' className='CityMap-map'></div>
+    </section>
   )
 }
 

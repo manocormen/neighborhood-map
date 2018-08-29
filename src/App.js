@@ -183,7 +183,7 @@ class App extends Component {
   }
 
   render = () => (
-    <div className='App'>
+    <main className='App'>
       <LocationsFilter
         filter={this.state.filter}
         onFilterChange={this.changeFilter}/>
@@ -201,7 +201,7 @@ class App extends Component {
         handleClick={this.toggleInfoWindow}
         unsplash={this.state.unsplash}
         onPhotoDataSet={this.setPhotoData}/>
-    </div>
+    </main>
   )
 }
 

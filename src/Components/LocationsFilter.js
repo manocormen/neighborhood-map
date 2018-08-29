@@ -5,9 +5,10 @@ class LocationsFilter extends Component {
   componentDidMount = () => this.refs.filters.focus()
 
   render = () => (
-    <div className='LocationsFilter'>
+    <aside className='LocationsFilter'>
       <h1 className='sidebar-heading'>Filter</h1>
       <select
+        aria-label='Filter by location type'
         ref='filters'
         value={this.props.filter}
         onChange={event => this.props.onFilterChange(event.target.value)}>
@@ -18,7 +19,7 @@ class LocationsFilter extends Component {
         <option value='market'>Markets</option>
         <option value='bridge'>Bridges</option>
       </select>
-    </div>
+    </aside>
   )
 }
 
