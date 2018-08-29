@@ -1,7 +1,7 @@
 .App {
   height: 100vh;
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 220px 1fr;
   /* Fit 1st row to content. Fill remaining space with 2nd row. */
   grid-template-rows: auto 1fr;
   grid-template-areas:
@@ -9,32 +9,61 @@
   "list map";
 }
 
-.sidebar-heading {
+.LocationsFilter {
+  background-color: #42a5f5;
+  display: flex;
+  text-align: center;
+}
+
+.LocationsFilter .sidebar-heading {
+  font-size: 16px;
+  width: 50%;
+}
+
+.LocationsFilter select {
+  background-color: #0077c2;
+  width: 50%;
+  text-align-last: center;
+  border: none;
+  font-weight: bold;
   font-size: 16px;
 }
 
-.LocationsFilter {
-  background-color: blue;
-  grid-area: filter;
+.LocationsFilter select:hover,
+.LocationsFilter select:focus {
+  background-color: #ff867a;
+  width: 50%;
+  text-align-last: center;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .LocationsList {
-  background-color: yellow;
+  background-color: #80d6ff;
   grid-area: list;
+  text-align: center;
 }
 
 .LocationsList-list {
   padding: 0;
+  margin: 0;
 }
 
 .LocationsList-item {
-  background-color: green;
+  background-color: #80d6ff;
   list-style: none;
+  padding: 4px 16px;
+  border-bottom: solid 1px #42a5f4;
 }
 
-.LocationsList-item-highlight {
-  background-color: grey;
+.LocationsList-item:hover,
+.LocationsList-item:focus {
+  background-color: #ff867c;
+  font-weight: bold;
   list-style: none;
+  padding: 4px 16px;
+  border-bottom: solid 1px #42a5f4;
 }
 
 .CityMap {
@@ -46,8 +75,14 @@
   width: 100%;
 }
 
-
-/* TODO: remove */
-:focus {
-  outline: black dashed 4px;
+@media screen and (max-width: 600px) {
+  .App {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+    "filter"
+    "list"
+    "map";
+  }
 }

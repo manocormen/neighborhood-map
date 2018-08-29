@@ -129,9 +129,9 @@ class App extends Component {
       if (index === locationIndex) {
         location.highlight = (location.highlight) ? false : true
         location.marker.setIcon(
-          (location.marker.icon === 'http://maps.google.com/mapfiles/ms/icons/red.png') ?
-          'http://maps.google.com/mapfiles/ms/icons/blue.png' :
-          'http://maps.google.com/mapfiles/ms/icons/red.png'
+          (location.marker.icon === 'http://maps.google.com/mapfiles/ms/icons/blue.png') ?
+          'http://maps.google.com/mapfiles/ms/icons/red.png' :
+          'http://maps.google.com/mapfiles/ms/icons/blue.png'
         )
       }
       return location

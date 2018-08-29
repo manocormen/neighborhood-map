@@ -6,7 +6,7 @@ class LocationsFilter extends Component {
 
   render = () => (
     <aside className='LocationsFilter'>
-      <h1 className='sidebar-heading'>Filter</h1>
+      <h1 className='sidebar-heading'>Filter:</h1>
       <select
         aria-label='Filter by location type'
         ref='filters'
