@@ -7,12 +7,14 @@ class CityMap extends Component {
     unsplashError: false
   }
 
+  // Handle Maps API loading error
   componentDidMount = () => {
     window.gm_authFailure = () => this.setState({ mapsError: true })
     window.initMap = this.initMap
     this.loadMapsAPI()
   }
 
+  // Load Maps API
   loadMapsAPI = () => {
     const loadMapsAPIScript = document.createElement('script')
     loadMapsAPIScript.async = true
@@ -21,6 +23,7 @@ class CityMap extends Component {
     document.body.appendChild(loadMapsAPIScript)
   }
 
+  // Create map object and add it to state via prop
   createMap = () => {
     const newMap = new window.google.maps.Map(this.refs.map, {
       center: {lat: 51.502491, lng: -0.10031},
@@ -31,6 +34,7 @@ class CityMap extends Component {
     this.props.onMapSet(newMap)
   }
 
+  // Create marker object and add it to state via prop
   createMarker = locationIndex => {
     const newMarker = new window.google.maps.Marker({
       map: this.props.map,
@@ -45,27 +49,36 @@ class CityMap extends Component {
     this.props.onMarkerSet(newMarker, locationIndex)
   }
 
+  // Create info window object and add it to state via prop
+  // All the photos are sourced from the Unsplash API
+  // More info: https://unsplash.com/developers
   createInfoWindow = locationIndex => {
 
+    // Build query to fetch photo from Unsplash API
     let query = this.props.unsplash.endPoint
     query += this.props.locations[locationIndex].photoId
     query += `?client_id=${this.props.unsplash.client_id}`
 
+    // Attempt to fetch photo from Unsplash API, and handle error if required
     fetch(query)
     .then(response => response.json())
     .then(newPhotoData => {
       this.props.onPhotoDataSet(newPhotoData, locationIndex)
-      return newPhotoData.urls.thumb
+      return newPhotoData
     })
     .catch(error => this.setState({ unsplashError: true }))
-    .then(thumbnail => {
+    .then(newPhotoData => {
       let newInfoWindowContent = (this.state.unsplashError) ?
       `<h2>${this.props.locations[locationIndex].name}</h2>
+        <h3>
+          Error: Unsplash couldn't fetch photo
+        </h3>
         <p aria-label='Notification of Unsplash error'>
-          Unsplash Error: An error occured while retrieving the photos. Check the Console for more information
+          Check Console for more information.
         </p>` :
       `<h2>${this.props.locations[locationIndex].name}</h2>
-        <img src=${thumbnail}/>`
+    <img src=${newPhotoData.urls.thumb} alt="` + newPhotoData.description + `"}/>
+        <p>Via the Unsplash API</p>`
       const newInfoWindow = new window.google.maps.InfoWindow({
         content: newInfoWindowContent,
         visible: false
@@ -82,6 +95,7 @@ class CityMap extends Component {
     })
   }
 
+  // Initialize the map-building routine --- one map, several markers and info windows
   initMap = () => {
     this.createMap()
 

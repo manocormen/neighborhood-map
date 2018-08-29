@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 class LocationsFilter extends Component {
 
+  // Move focus to drop-down filter menu on page load
   componentDidMount = () => this.refs.filters.focus()
 
   render = () => (

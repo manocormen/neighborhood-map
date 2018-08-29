@@ -15,14 +15,14 @@ class App extends Component {
     },
     locations: [
       {
-        name: 'National Gallery',
+        name: 'British Museum',
         type: 'museum',
-        latlng: {lat: 51.508929, lng: -0.128299},
+        latlng: {lat: 51.519413, lng: -0.126957},
         display: true,
         highlight: false,
         marker: null,
         infoWindow: null,
-        photoId: 'SKEXXjiNYIU',
+        photoId: 'S2_e-byc-mM',
         photoData: null
       },
       {
@@ -33,7 +33,7 @@ class App extends Component {
         highlight: false,
         marker: null,
         infoWindow: null,
-        photoId: 'gmrXvrxK89E',
+        photoId: 'CC_gRlLbhwg',
         photoData: null
       },
       {
@@ -44,7 +44,7 @@ class App extends Component {
         highlight: false,
         marker: null,
         infoWindow: null,
-        photoId: 'msaWUSxVstU',
+        photoId: 'aLoN4KX1xSA',
         photoData: null
       },
       {
@@ -55,7 +55,7 @@ class App extends Component {
         highlight: false,
         marker: null,
         infoWindow: null,
-        photoId: 'QUQ53Qkmul0',
+        photoId: '-pyjPVh77uE',
         photoData: null
       },
       {
@@ -66,14 +66,16 @@ class App extends Component {
         highlight: false,
         marker: null,
         infoWindow: null,
-        photoId: 'ImoVrhUBeFs',
+        photoId: 'IWNT3MeI2rE',
         photoData: null
       }
     ]
   }
 
+  // Add map to state
   setMap = newMap => this.setState({ map: newMap })
 
+  // Add marker to state
   setMarker = (newMarker, locationIndex) => {
     const newLocations = this.state.locations.map((location, index) => {
       if (locationIndex === index) { location.marker = newMarker }
@@ -83,6 +85,7 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  // Add Unsplash photo data to state
   setPhotoData = (newPhotoData, locationIndex) => {
     const newLocations = this.state.locations.map((location, index) => {
       if (locationIndex === index) { location.photoData = newPhotoData }
@@ -92,6 +95,7 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  // Add marker info window to state
   setInfoWindow = (newInfoWindow, locationIndex) => {
     const newLocations = this.state.locations.map((location, index) => {
       if (locationIndex === index) { location.infoWindow = newInfoWindow }
@@ -101,6 +105,7 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  // Switch current filter, and adjust state accordingly
   changeFilter = newFilter => {
     const newLocations = this.state.locations.map((location, locationIndex) => {
       location.display = (newFilter === 'showAll' || location.type === newFilter) ? true : false
@@ -115,6 +120,7 @@ class App extends Component {
     })
   }
 
+  // Show / hide markers by updating their visibility in the state
   toggleMarker = locationIndex => {
     const newLocations = this.state.locations.map((location, index) => {
       if (index === locationIndex) { location.marker.setVisible(location.display) }
@@ -124,6 +130,7 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  // Highlight locations in list and switch the color of corresponding marker
   toggleHighlight = locationIndex => {
     const newLocations = this.state.locations.map((location, index) => {
       if (index === locationIndex) {
@@ -139,6 +146,7 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  // Show / hide info window
   toggleInfoWindow = locationIndex => {
     const newLocations = this.state.locations.map((location, index) => {
       if (index === locationIndex) {
@@ -157,6 +165,7 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  // Close all info windows --- ensure that there's only one open at a time
   closeAllInfoWindows = () => {
     const newLocations = this.state.locations.map(location => {
       if (location.infoWindow.visible) {
@@ -169,6 +178,7 @@ class App extends Component {
     this.setState({ locations: newLocations })
   }
 
+  // Hide info windows of filtered markers
   closeFilteredInfoWindows = locationIndex => {
     const newLocations = this.state.locations.map(location => {
       if (!location.marker.visible) {
