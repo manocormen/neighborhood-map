@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 
 class CityMap extends Component {
 
+  state = {
+    mapsError: false,
+    unsplashError: false
+  }
+
   componentDidMount = () => {
+    window.gm_authFailure = () => this.setState({ mapsError: true })
     window.initMap = this.initMap
     this.loadMapsAPI()
   }
@@ -51,11 +57,17 @@ class CityMap extends Component {
       this.props.onPhotoDataSet(newPhotoData, locationIndex)
       return newPhotoData.urls.thumb
     })
+    .catch(error => this.setState({ unsplashError: true }))
     .then(thumbnail => {
+      let newInfoWindowContent = (this.state.unsplashError) ?
+      `<h2>${this.props.locations[locationIndex].name}</h2>
+        <p aria-label='Notification of Unsplash error'>
+          Unsplash Error: An error occured while retrieving the photos. Check the Console for more information
+        </p>` :
+      `<h2>${this.props.locations[locationIndex].name}</h2>
+        <img src=${thumbnail}/>`
       const newInfoWindow = new window.google.maps.InfoWindow({
-        content:
-          `<div>${this.props.locations[locationIndex].name}</div>
-           <img src=${thumbnail}/>`,
+        content: newInfoWindowContent,
         visible: false
       })
       return newInfoWindow
@@ -82,7 +94,13 @@ class CityMap extends Component {
 
   render = () => (
     <section className='CityMap'>
-      <div role='application' aria-label='Map of London' ref='map' className='CityMap-map'></div>
+      {(this.state.mapsError) ? (
+        <p aria-label='Notification of Google Maps error'>
+          Google Maps Error: An error occured while retrieving the map. Check the console for more information.
+        </p>
+      ) : (
+        <div role='application' aria-label='Map of London' ref='map' className='CityMap-map'></div>
+      )}
     </section>
   )
 }
